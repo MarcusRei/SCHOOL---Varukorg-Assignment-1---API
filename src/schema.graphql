@@ -11,6 +11,14 @@ type Item {
   itemPrice: Int
 }
 
+enum availableItems {
+  BASKETBALL
+  FOOTBALL
+  TENNISBALL
+  SHUTTERCOCK
+  HOCKEYPUCK
+}
+
 type DeletedResourceResponse {
   deletedId: ID
   success: Boolean
@@ -23,12 +31,12 @@ type Query {
 
 type Mutation {
   createUsercart: Usercart
-  addItemToUsercart(username: String!): Usercart
-  updateUsercart: Usercart
+  addItemToUsercart(input: AddItemtoUsercartInput): Usercart
+  removeItemFromUsercart(id: ID!): Usercart
   deleteUsercart(usercartId: ID!): DeletedResourceResponse
 }
 
 input AddItemtoUsercartInput {
-  name: String!
-  itemPrice: Int!
+  usercartId: ID!
+  chosenItem: availableItems
 }

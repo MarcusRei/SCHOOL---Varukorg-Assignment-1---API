@@ -8,13 +8,13 @@ const {
 } = require("../utils/fileHandling");
 const { GraphQLError, printType } = require("graphql");
 const crypto = require("crypto");
-const { assertValidExecutionArguments } = require("graphql/execution/execute");
 //const axios = require("axios").default;
 
 const usercartDirectory = path.join(__dirname, "..", "data", "usercarts");
 const itemDirectory = path.join(__dirname, "..", "data", "items");
 
-const basketball = {
+//Mockdata
+/* const basketball = {
   id: "7b30fcf5-06cb-4f3c-b61e-b560e3476c5b",
   name: "Basketball",
   itemprice: 150,
@@ -30,7 +30,7 @@ const tennisball = {
   id: "6cc538fa-c247-4779-8378-6a9a02fc200c",
   name: "Tennisball",
   itemprice: 50,
-};
+}; */
 
 exports.resolvers = {
   Query: {
@@ -77,7 +77,7 @@ exports.resolvers = {
   },
   Mutation: {
     createUsercart: async (_, args) => {
-      const items = [basketball, tennisball, football];
+      const items = [];
 
       let price = 0;
       for (let i = 0; i < items.length; i++) {
@@ -114,26 +114,86 @@ exports.resolvers = {
 
       //return null;
     },
-    addItemToUsercart: async (_, args) => {},
-    updateUsercart: async (_, args) => {
-      const { id, username, amountOfItems, totalPrice } = args;
+    addItemToUsercart: async (_, args) => {
+      const { usercartId, chosenItem } = args.input;
 
-      const filePath = path.join(usercartDirectory, `${id}.json`);
+      const usercartFilePath = path.join(
+        usercartDirectory,
+        `${usercartId}.json`
+      );
 
-      const usercartExists = await fileExists(filePath);
-      if (!usercartExists)
-        return new GraphQLError("Den här varukorgen finns inte");
+      //Existence check
+      const usercartExists = await fileExists(usercartFilePath);
+      if (!usercartExists) {
+        return new GraphQLError("Den här varukorgen finns inte!");
+      }
 
-      const updatedUsercart = {
-        id,
-        username,
-        amountOfItems,
-        totalPrice,
-      };
+      const listOfitems = await getDirectoryFileNames(itemDirectory);
 
-      await fsPromises.writeFile(filePath, JSON.stringify(updatedUsercart));
+      itemsData = [];
 
-      return updatedUsercart;
+      for (const file of listOfitems) {
+        const ItemfilePath = path.join(itemDirectory, file);
+
+        const fileContents = await fsPromises.readFile(ItemfilePath, {
+          encoding: "utf-8",
+        });
+
+        const data = JSON.parse(fileContents);
+
+        itemsData.push(data);
+      }
+
+      console.log(itemsData);
+      console.log(args.input.chosenItem);
+
+      /* for (let i = 0; i < itemsData.length; i++) {
+        if (args.input.chosenItem === itemsData[i].name) {
+          console.log("Hello there!");
+        }
+      } */
+
+      for (let i = 0; i < itemsData.length; i++) {
+        if (args.input.chosenItem === "FOOTBALL") {
+          console.log("Hello there!");
+        }
+
+        /*  if (args.input.chosenItem === "BASKETBALL") {
+          console.log("Hello there!");
+        }
+
+        if (args.input.chosenItem === "TENNISBALL") {
+          console.log("Hello there!");
+        }
+
+        if (args.input.chosenItem === "SHUTTERCOCK") {
+          console.log("Hello there!");
+        }
+
+        if (args.input.chosenItem === "HOCKEYPUCK") {
+          console.log("Hello there!");
+        } */
+      }
+
+      //Create updated object
+      /* const updatedUsercart = {
+        id: usercartId,
+        amountOfItems: items.length,
+        items: items,
+        totalPrice: price,
+      }; */
+
+      //Overwrite file
+      /* await fsPromises.writeFile(
+        usercartFilePath,
+        JSON.stringify(updatedUsercart)
+      ); */
+
+      //return updatedUsercart;
+      return null;
+    },
+    removeItemFromUsercart: async (_, args) => {
+      return null;
     },
     deleteUsercart: async (_, args) => {
       //Get the ID
@@ -164,3 +224,32 @@ exports.resolvers = {
     },
   },
 };
+
+//itemsData
+/* [
+  {
+    id: '4c7af0ef-af7f-4647-ad77-ee5b90cf9bcf', 
+    name: 'Football',
+    itemprice: 100
+  },
+  {
+    id: '6cc538fa-c247-4779-8378-6a9a02fc200c', 
+    name: 'Tennisball',
+    itemprice: 50
+  },
+  {
+    id: '744fc6755-3189-4ae6-a5d1-bfc5a450a730',
+    name: 'Shuttercock',
+    itemprice: 40
+  },
+  {
+    id: '7b30fcf5-06cb-4f3c-b61e-b560e3476c5b', 
+    name: 'Basketball',
+    itemprice: 150
+  },
+  {
+    id: 'f7dc9d36-0be5-47eb-b57e-1f5bbc335b3c', 
+    name: 'Hockeypuck',
+    itemprice: 70
+  }
+] */
