@@ -1,0 +1,21 @@
+{
+  "id": "4c7af0ef-af7f-4647-ad77-ee5b90cf9bcf",
+  "amountOfItems": 3,
+  "items": [
+    {
+      "id": "7b30fcf5-06cb-4f3c-b61e-b560e3476c5b",
+      "name": "Basketball",
+      "itemprice": 150
+    },
+    {
+      "id": "7b30fcf5-06cb-4f3c-b61e-b560e3476c5b",
+      "name": "Basketball",
+      "itemprice": 150
+    },
+    {
+      "id": "7b30fcf5-06cb-4f3c-b61e-b560e3476c5b",
+      "name": "Basketball",
+      "itemprice": 150
+    }
+  ]
+}

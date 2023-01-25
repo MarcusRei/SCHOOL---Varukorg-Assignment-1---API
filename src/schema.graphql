@@ -1,17 +1,14 @@
 type Usercart {
   id: ID
-  username: String
   amountOfItems: Int
-  totalprice: Int
-  # Item: [Item] @TODO
+  items: [Item]
+  totalPrice: Int
 }
 
 type Item {
   id: ID
   name: String
-  description: String
-  price: Int
-  # Usercart: Usercart @TODO
+  itemPrice: Int
 }
 
 type DeletedResourceResponse {
@@ -22,11 +19,16 @@ type DeletedResourceResponse {
 type Query {
   getUsercartById(usercartId: ID!): Usercart
   getAllUsercarts: [Usercart]
-  getAllItems: [Item]
 }
 
 type Mutation {
   createUsercart: Usercart
+  addItemToUsercart(username: String!): Usercart
   updateUsercart: Usercart
-  deleteUsercart: DeletedResourceResponse
+  deleteUsercart(usercartId: ID!): DeletedResourceResponse
+}
+
+input AddItemtoUsercartInput {
+  name: String!
+  itemPrice: Int!
 }

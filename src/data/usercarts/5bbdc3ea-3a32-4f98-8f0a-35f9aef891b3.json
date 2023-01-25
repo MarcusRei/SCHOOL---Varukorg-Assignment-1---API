@@ -1,0 +1,22 @@
+{
+  "id": "5bbdc3ea-3a32-4f98-8f0a-35f9aef891b3",
+  "amountOfItems": 3,
+  "items": [
+    {
+      "id": "7b30fcf5-06cb-4f3c-b61e-b560e3476c5b",
+      "name": "Basketball",
+      "itemprice": 150
+    },
+    {
+      "id": "7b30fcf5-06cb-4f3c-b61e-b560e3476c5b",
+      "name": "Tennisball",
+      "itemprice": 50
+    },
+    {
+      "id": "7b30fcf5-06cb-4f3c-b61e-b560e3476c5b",
+      "name": "Football",
+      "itemprice": 100
+    }
+  ],
+  "totalPrice": 300
+}
