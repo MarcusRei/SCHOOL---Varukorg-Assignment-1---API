@@ -1,0 +1,32 @@
+type Usercart {
+  id: ID
+  username: String
+  amountOfItems: Int
+  totalprice: Int
+  # Item: [Item] @TODO
+}
+
+type Item {
+  id: ID
+  name: String
+  description: String
+  price: Int
+  # Usercart: Usercart @TODO
+}
+
+type DeletedResourceResponse {
+  deletedId: ID
+  success: Boolean
+}
+
+type Query {
+  getUsercartById(usercartId: ID!): Usercart
+  getAllUsercarts: [Usercart]
+  getAllItems: [Item]
+}
+
+type Mutation {
+  createUsercart: Usercart
+  updateUsercart: Usercart
+  deleteUsercart: DeletedResourceResponse
+}
