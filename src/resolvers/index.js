@@ -117,6 +117,7 @@ exports.resolvers = {
     addItemToUsercart: async (_, args) => {
       const { usercartId, chosenItem } = args.input;
 
+      //filepath usercart
       const usercartFilePath = path.join(
         usercartDirectory,
         `${usercartId}.json`
@@ -128,10 +129,20 @@ exports.resolvers = {
         return new GraphQLError("Den här varukorgen finns inte!");
       }
 
+      //Read the usercart (still in JSON)
+      const usercartJSON = await fsPromises.readFile(usercartFilePath, {
+        encoding: "utf-8",
+      });
+
+      const usercartData = JSON.parse(usercartJSON);
+
+      //get list of items
       const listOfitems = await getDirectoryFileNames(itemDirectory);
 
-      itemsData = [];
+      availableItems = [];
+      const items = usercartData.items;
 
+      //loop through, parse and add to available items
       for (const file of listOfitems) {
         const ItemfilePath = path.join(itemDirectory, file);
 
@@ -141,56 +152,61 @@ exports.resolvers = {
 
         const data = JSON.parse(fileContents);
 
-        itemsData.push(data);
+        availableItems.push(data);
       }
 
-      console.log(itemsData);
-      console.log(args.input.chosenItem);
+      console.log(availableItems);
 
-      /* for (let i = 0; i < itemsData.length; i++) {
-        if (args.input.chosenItem === itemsData[i].name) {
-          console.log("Hello there!");
-        }
-      } */
-
-      for (let i = 0; i < itemsData.length; i++) {
+      for (let i = 0; i < availableItems.length; i++) {
         if (args.input.chosenItem === "FOOTBALL") {
-          console.log("Hello there!");
+          usercartData.items.push(availableItems[i]);
+          console.log(usercartData.items);
+        } else {
+          if (args.input.chosenItem === "BASKETBALL") {
+            usercartData.items.push(availableItems[i]);
+            console.log(usercartData.items);
+          } else {
+            if (args.input.chosenItem === "TENNISBALL") {
+              usercartData.items.push(availableItems[i]);
+              console.log(usercartData.items);
+            } else {
+              if (args.input.chosenItem === "HOCKEYPUCK") {
+                usercartData.items.push(availableItems[i]);
+                console.log(usercartData.items);
+              } else {
+                if (args.input.chosenItem === "SHUTTERCOCK") {
+                  usercartData.items.push(availableItems[i]);
+                  console.log(usercartData.items);
+                }
+              }
+            }
+          }
         }
+      }
 
-        /*  if (args.input.chosenItem === "BASKETBALL") {
-          console.log("Hello there!");
-        }
-
-        if (args.input.chosenItem === "TENNISBALL") {
-          console.log("Hello there!");
-        }
-
-        if (args.input.chosenItem === "SHUTTERCOCK") {
-          console.log("Hello there!");
-        }
-
-        if (args.input.chosenItem === "HOCKEYPUCK") {
-          console.log("Hello there!");
-        } */
+      console.log(usercartData);
+      //Calculate price
+      let price = 0;
+      for (let i = 0; i < usercartData.items.length; i++) {
+        price += usercartData.items[i].itemprice;
       }
 
       //Create updated object
-      /* const updatedUsercart = {
-        id: usercartId,
-        amountOfItems: items.length,
-        items: items,
+      const updatedUsercart = {
+        id: usercartData.id,
+        amountOfItems: usercartData.items.length,
+        items: usercartData.items,
         totalPrice: price,
-      }; */
+      };
 
       //Overwrite file
-      /* await fsPromises.writeFile(
+      await fsPromises.writeFile(
         usercartFilePath,
         JSON.stringify(updatedUsercart)
-      ); */
+      );
 
       //return updatedUsercart;
-      return null;
+      return updatedUsercart;
     },
     removeItemFromUsercart: async (_, args) => {
       return null;

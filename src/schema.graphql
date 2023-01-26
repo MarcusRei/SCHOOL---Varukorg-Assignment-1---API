@@ -31,7 +31,7 @@ type Query {
 
 type Mutation {
   createUsercart: Usercart
-  addItemToUsercart(input: AddItemtoUsercartInput): Usercart
+  addItemToUsercart(input: AddItemtoUsercartInput!): Usercart
   removeItemFromUsercart(id: ID!): Usercart
   deleteUsercart(usercartId: ID!): DeletedResourceResponse
 }
