@@ -155,36 +155,33 @@ exports.resolvers = {
         availableItems.push(data);
       }
 
-      console.log(availableItems);
-
-      for (let i = 0; i < availableItems.length; i++) {
+      //If argument matches add item to cart
+      /* for (let i = 0; i < availableItems.length; i++) {
         if (args.input.chosenItem === "FOOTBALL") {
-          usercartData.items.push(availableItems[i]);
-          console.log(usercartData.items);
-        } else {
-          if (args.input.chosenItem === "BASKETBALL") {
-            usercartData.items.push(availableItems[i]);
-            console.log(usercartData.items);
-          } else {
-            if (args.input.chosenItem === "TENNISBALL") {
-              usercartData.items.push(availableItems[i]);
-              console.log(usercartData.items);
-            } else {
-              if (args.input.chosenItem === "HOCKEYPUCK") {
-                usercartData.items.push(availableItems[i]);
-                console.log(usercartData.items);
-              } else {
-                if (args.input.chosenItem === "SHUTTERCOCK") {
-                  usercartData.items.push(availableItems[i]);
-                  console.log(usercartData.items);
-                }
-              }
-            }
-          }
+          usercartData.items.push(availableItems[0]);
         }
+      } */
+
+      if (args.input.chosenItem === "FOOTBALL") {
+        usercartData.items.push(availableItems[0]);
       }
 
-      console.log(usercartData);
+      if (args.input.chosenItem === "TENNISBALL") {
+        usercartData.items.push(availableItems[1]);
+      }
+
+      if (args.input.chosenItem === "BASKETBALL") {
+        usercartData.items.push(availableItems[2]);
+      }
+
+      if (args.input.chosenItem === "SHUTTERCOCK") {
+        usercartData.items.push(availableItems[3]);
+      }
+
+      if (args.input.chosenItem === "HOCKEYPUCK") {
+        usercartData.items.push(availableItems[4]);
+      }
+
       //Calculate price
       let price = 0;
       for (let i = 0; i < usercartData.items.length; i++) {
