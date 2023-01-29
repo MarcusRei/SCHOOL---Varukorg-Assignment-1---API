@@ -8,6 +8,7 @@ const {
 } = require("../utils/fileHandling");
 const { GraphQLError, printType } = require("graphql");
 const crypto = require("crypto");
+//const { availableItems } = require("../enums/availableItems");
 //const axios = require("axios").default;
 
 const usercartDirectory = path.join(__dirname, "..", "data", "usercarts");
@@ -137,10 +138,10 @@ exports.resolvers = {
       const usercartData = JSON.parse(usercartJSON);
 
       //get list of items
-      const listOfitems = await getDirectoryFileNames(itemDirectory);
+      let listOfitems = await getDirectoryFileNames(itemDirectory);
 
-      availableItems = [];
-      const items = usercartData.items;
+      const availableItems = [];
+      let items = usercartData.items;
 
       //loop through, parse and add to available items
       for (const file of listOfitems) {
@@ -163,36 +164,38 @@ exports.resolvers = {
       } */
 
       if (args.input.chosenItem === "FOOTBALL") {
-        usercartData.items.push(availableItems[0]);
+        items.push(availableItems[0]);
       }
 
       if (args.input.chosenItem === "TENNISBALL") {
-        usercartData.items.push(availableItems[1]);
-      }
-
-      if (args.input.chosenItem === "BASKETBALL") {
-        usercartData.items.push(availableItems[2]);
+        items.push(availableItems[1]);
       }
 
       if (args.input.chosenItem === "SHUTTERCOCK") {
-        usercartData.items.push(availableItems[3]);
+        items.push(availableItems[2]);
+      }
+
+      if (args.input.chosenItem === "BASKETBALL") {
+        items.push(availableItems[3]);
       }
 
       if (args.input.chosenItem === "HOCKEYPUCK") {
-        usercartData.items.push(availableItems[4]);
+        items.push(availableItems[4]);
       }
+
+      //console.log(availableItems);
 
       //Calculate price
       let price = 0;
-      for (let i = 0; i < usercartData.items.length; i++) {
-        price += usercartData.items[i].itemprice;
+      for (let i = 0; i < items.length; i++) {
+        price += items[i].itemprice;
       }
 
       //Create updated object
-      const updatedUsercart = {
+      let updatedUsercart = {
         id: usercartData.id,
-        amountOfItems: usercartData.items.length,
-        items: usercartData.items,
+        amountOfItems: items.length,
+        items: items,
         totalPrice: price,
       };
 
@@ -206,7 +209,65 @@ exports.resolvers = {
       return updatedUsercart;
     },
     removeItemFromUsercart: async (_, args) => {
-      return null;
+      const { usercartId, chosenItem } = args.input;
+
+      //filepath usercart
+      const usercartFilePath = path.join(
+        usercartDirectory,
+        `${usercartId}.json`
+      );
+
+      //Existence check
+      const usercartExists = await fileExists(usercartFilePath);
+      if (!usercartExists) {
+        return new GraphQLError("Den här varukorgen finns inte!");
+      }
+
+      //Read the usercart (still in JSON)
+      const usercartJSON = await fsPromises.readFile(usercartFilePath, {
+        encoding: "utf-8",
+      });
+
+      const usercartData = JSON.parse(usercartJSON);
+
+      let items = usercartData.items;
+      //console.log(args.input.chosenItem);
+
+      for (let i = 0; i < items.length; i++) {
+        console.log(" Det här är " + items[i].name);
+        if (chosenItem === items[i].name) {
+          items.splice(items[i], 1);
+          console.log("Då tar vi den!");
+
+          break;
+        }
+      }
+
+      console.log(items);
+
+      //Calculate price
+      let price = 0;
+      for (let i = 0; i < items.length; i++) {
+        price += items[i].itemprice;
+      }
+
+      //Create updated object
+      let updatedUsercart = {
+        id: usercartData.id,
+        amountOfItems: items.length,
+        items: items,
+        totalPrice: price,
+      };
+
+      //Overwrite file
+      await fsPromises.writeFile(
+        usercartFilePath,
+        JSON.stringify(updatedUsercart)
+      );
+
+      return updatedUsercart;
+
+      //return null;
     },
     deleteUsercart: async (_, args) => {
       //Get the ID
@@ -237,32 +298,3 @@ exports.resolvers = {
     },
   },
 };
-
-//itemsData
-/* [
-  {
-    id: '4c7af0ef-af7f-4647-ad77-ee5b90cf9bcf', 
-    name: 'Football',
-    itemprice: 100
-  },
-  {
-    id: '6cc538fa-c247-4779-8378-6a9a02fc200c', 
-    name: 'Tennisball',
-    itemprice: 50
-  },
-  {
-    id: '744fc6755-3189-4ae6-a5d1-bfc5a450a730',
-    name: 'Shuttercock',
-    itemprice: 40
-  },
-  {
-    id: '7b30fcf5-06cb-4f3c-b61e-b560e3476c5b', 
-    name: 'Basketball',
-    itemprice: 150
-  },
-  {
-    id: 'f7dc9d36-0be5-47eb-b57e-1f5bbc335b3c', 
-    name: 'Hockeypuck',
-    itemprice: 70
-  }
-] */
