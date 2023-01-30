@@ -75,6 +75,26 @@ exports.resolvers = {
 
       return usercartData;
     },
+    getItemById: async (_, args) => {
+      const itemId = args.itemId;
+
+      const itemFilePath = path.join(itemDirectory, `${itemId}.json`);
+
+      const itemExists = await fileExists(itemFilePath);
+
+      if (!itemExists)
+        return new GraphQLError("Den här produkten finns inte i sortimentet!");
+
+      const itemData = await fsPromises.readFile(itemFilePath, {
+        encoding: "utf-8",
+      });
+
+      const data = JSON.parse(itemData);
+
+      console.log(itemData);
+
+      return data;
+    },
   },
   Mutation: {
     createUsercart: async (_, args) => {

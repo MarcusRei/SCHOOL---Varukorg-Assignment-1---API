@@ -1,6 +1,12 @@
 {
   "id": "b3e0194f-02e3-4dca-b8c6-2d485b2fde11",
-  "amountOfItems": 0,
-  "items": [],
-  "totalPrice": 0
+  "amountOfItems": 1,
+  "items": [
+    {
+      "id": "7b30fcf5-06cb-4f3c-b61e-b560e3476c5b",
+      "name": "BASKETBALL",
+      "itemprice": 150
+    }
+  ],
+  "totalPrice": 150
 }

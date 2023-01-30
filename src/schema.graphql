@@ -27,6 +27,7 @@ type DeletedResourceResponse {
 type Query {
   getUsercartById(usercartId: ID!): Usercart
   getAllUsercarts: [Usercart]
+  getItemById(itemId: ID!): Item
 }
 
 type Mutation {
