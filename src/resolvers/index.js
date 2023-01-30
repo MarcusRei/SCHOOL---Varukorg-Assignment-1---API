@@ -227,7 +227,6 @@ exports.resolvers = {
       const usercartJSON = await fsPromises.readFile(usercartFilePath, {
         encoding: "utf-8",
       });
-
       const usercartData = JSON.parse(usercartJSON);
 
       let items = usercartData.items;
