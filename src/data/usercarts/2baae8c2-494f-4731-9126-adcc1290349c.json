@@ -1,22 +1,12 @@
 {
   "id": "2baae8c2-494f-4731-9126-adcc1290349c",
-  "amountOfItems": 3,
+  "amountOfItems": 1,
   "items": [
-    {
-      "id": "7b30fcf5-06cb-4f3c-b61e-b560e3476c5b",
-      "name": "BASKETBALL",
-      "itemprice": 150
-    },
-    {
-      "id": "f7dc9d36-0be5-47eb-b57e-1f5bbc335b3c",
-      "name": "HOCKEYPUCK",
-      "itemprice": 70
-    },
     {
       "id": "744fc6755-3189-4ae6-a5d1-bfc5a450a730",
       "name": "SHUTTERCOCK",
       "itemprice": 40
     }
   ],
-  "totalPrice": 260
+  "totalPrice": 40
 }

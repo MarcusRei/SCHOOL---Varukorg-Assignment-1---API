@@ -1,4 +1,4 @@
-exports.availableItems = {
+exports.availableItemsEnum = {
   BASKETBALL: "BASKETBALL",
   FOOTBALL: "FOOTBALL",
   TENNISBALL: "TENNISBALL",

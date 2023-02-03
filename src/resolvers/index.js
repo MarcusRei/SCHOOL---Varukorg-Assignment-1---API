@@ -13,25 +13,7 @@ const crypto = require("crypto");
 
 const usercartDirectory = path.join(__dirname, "..", "data", "usercarts");
 const itemDirectory = path.join(__dirname, "..", "data", "items");
-
-//Mockdata
-/* const basketball = {
-  id: "7b30fcf5-06cb-4f3c-b61e-b560e3476c5b",
-  name: "Basketball",
-  itemprice: 150,
-};
-
-const football = {
-  id: "4c7af0ef-af7f-4647-ad77-ee5b90cf9bcf",
-  name: "Football",
-  itemprice: 100,
-};
-
-const tennisball = {
-  id: "6cc538fa-c247-4779-8378-6a9a02fc200c",
-  name: "Tennisball",
-  itemprice: 50,
-}; */
+const { availableItemsEnum } = require("../enums/availableItems");
 
 exports.resolvers = {
   Query: {
@@ -183,27 +165,25 @@ exports.resolvers = {
         }
       } */
 
-      if (args.input.chosenItem === "FOOTBALL") {
+      if (args.input.chosenItem === availableItemsEnum.FOOTBALL) {
         items.push(availableItems[0]);
       }
 
-      if (args.input.chosenItem === "TENNISBALL") {
+      if (args.input.chosenItem === availableItemsEnum.TENNISBALL) {
         items.push(availableItems[1]);
       }
 
-      if (args.input.chosenItem === "SHUTTERCOCK") {
+      if (args.input.chosenItem === availableItemsEnum.SHUTTERCOCK) {
         items.push(availableItems[2]);
       }
 
-      if (args.input.chosenItem === "BASKETBALL") {
+      if (args.input.chosenItem === availableItemsEnum.BASKETBALL) {
         items.push(availableItems[3]);
       }
 
-      if (args.input.chosenItem === "HOCKEYPUCK") {
+      if (args.input.chosenItem === availableItemsEnum.HOCKEYPUCK) {
         items.push(availableItems[4]);
       }
-
-      //console.log(availableItems);
 
       //Calculate price
       let price = 0;
@@ -255,7 +235,7 @@ exports.resolvers = {
       for (let i = 0; i < items.length; i++) {
         console.log(" Det här är " + items[i].name);
         if (chosenItem === items[i].name) {
-          items.splice(items[i], 1);
+          items.splice(i, 1);
           console.log("Då tar vi den!");
 
           break;
