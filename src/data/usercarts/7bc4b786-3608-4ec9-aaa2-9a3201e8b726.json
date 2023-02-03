@@ -1,1 +1,17 @@
-{"id":"7bc4b786-3608-4ec9-aaa2-9a3201e8b726","amountOfItems":2,"items":[{"id":"7b30fcf5-06cb-4f3c-b61e-b560e3476c5b","name":"BASKETBALL","itemprice":150},{"id":"4c7af0ef-af7f-4647-ad77-ee5b90cf9bcf","name":"FOOTBALL","itemprice":100}],"totalPrice":250}
+{
+  "id": "7bc4b786-3608-4ec9-aaa2-9a3201e8b726",
+  "amountOfItems": 2,
+  "items": [
+    {
+      "id": "7b30fcf5-06cb-4f3c-b61e-b560e3476c5b",
+      "name": "BASKETBALL",
+      "itemPrice": 150
+    },
+    {
+      "id": "4c7af0ef-af7f-4647-ad77-ee5b90cf9bcf",
+      "name": "FOOTBALL",
+      "itemPrice": 100
+    }
+  ],
+  "totalPrice": 250
+}

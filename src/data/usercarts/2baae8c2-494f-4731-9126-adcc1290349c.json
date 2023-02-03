@@ -1,12 +1,6 @@
 {
   "id": "2baae8c2-494f-4731-9126-adcc1290349c",
-  "amountOfItems": 1,
-  "items": [
-    {
-      "id": "744fc6755-3189-4ae6-a5d1-bfc5a450a730",
-      "name": "SHUTTERCOCK",
-      "itemprice": 40
-    }
-  ],
-  "totalPrice": 40
+  "amountOfItems": 0,
+  "items": [],
+  "totalPrice": 0
 }

@@ -8,9 +8,6 @@ const {
 } = require("../utils/fileHandling");
 const { GraphQLError, printType } = require("graphql");
 const crypto = require("crypto");
-//const { availableItems } = require("../enums/availableItems");
-//const axios = require("axios").default;
-
 const usercartDirectory = path.join(__dirname, "..", "data", "usercarts");
 const itemDirectory = path.join(__dirname, "..", "data", "items");
 const { availableItemsEnum } = require("../enums/availableItems");
@@ -158,13 +155,6 @@ exports.resolvers = {
         availableItems.push(data);
       }
 
-      //If argument matches add item to cart
-      /* for (let i = 0; i < availableItems.length; i++) {
-        if (args.input.chosenItem === "FOOTBALL") {
-          usercartData.items.push(availableItems[0]);
-        }
-      } */
-
       if (args.input.chosenItem === availableItemsEnum.FOOTBALL) {
         items.push(availableItems[0]);
       }
@@ -188,7 +178,7 @@ exports.resolvers = {
       //Calculate price
       let price = 0;
       for (let i = 0; i < items.length; i++) {
-        price += items[i].itemprice;
+        price += items[i].itemPrice;
       }
 
       //Create updated object
@@ -230,24 +220,21 @@ exports.resolvers = {
       const usercartData = JSON.parse(usercartJSON);
 
       let items = usercartData.items;
-      //console.log(args.input.chosenItem);
 
       for (let i = 0; i < items.length; i++) {
-        console.log(" Det här är " + items[i].name);
         if (chosenItem === items[i].name) {
           items.splice(i, 1);
-          console.log("Då tar vi den!");
 
           break;
+        } else {
+          return new GraphQLError("Den här varan finns inte i varukorgen!");
         }
       }
-
-      console.log(items);
 
       //Calculate price
       let price = 0;
       for (let i = 0; i < items.length; i++) {
-        price += items[i].itemprice;
+        price += items[i].itemPrice;
       }
 
       //Create updated object
@@ -265,8 +252,6 @@ exports.resolvers = {
       );
 
       return updatedUsercart;
-
-      //return null;
     },
     deleteUsercart: async (_, args) => {
       //Get the ID

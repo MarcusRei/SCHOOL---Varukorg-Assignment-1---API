@@ -1,12 +1,1 @@
-{
-  "id": "7b06ce03-093c-4d31-bf47-6417d2c5fea2",
-  "amountOfItems": 1,
-  "items": [
-    {
-      "id": "6cc538fa-c247-4779-8378-6a9a02fc200c",
-      "name": "TENNISBALL",
-      "itemprice": 50
-    }
-  ],
-  "totalPrice": 50
-}
+{"id":"7b06ce03-093c-4d31-bf47-6417d2c5fea2","amountOfItems":5,"items":[{"id":"6cc538fa-c247-4779-8378-6a9a02fc200c","name":"TENNISBALL","itemPrice":50},{"id":"4c7af0ef-af7f-4647-ad77-ee5b90cf9bcf","name":"FOOTBALL","itemPrice":100},{"id":"4c7af0ef-af7f-4647-ad77-ee5b90cf9bcf","name":"FOOTBALL","itemPrice":100},{"id":"4c7af0ef-af7f-4647-ad77-ee5b90cf9bcf","name":"FOOTBALL","itemPrice":100},{"id":"4c7af0ef-af7f-4647-ad77-ee5b90cf9bcf","name":"FOOTBALL","itemPrice":100}],"totalPrice":450}
